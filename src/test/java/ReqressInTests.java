@@ -64,7 +64,7 @@ public class ReqressInTests {
     }
 
     @Test
-    void unsuccessDelete() {
+    void successDelete() {
         given()
                 .when()
                 .delete("/api/users/2")
@@ -73,7 +73,7 @@ public class ReqressInTests {
     }
 
     @Test
-    void unsuccessUpdate() {
+    void successUpdate() {
         given()
                 .contentType(ContentType.JSON)
                 .body("{ \"name\": \"morpheus\", \"job\": \"zion resident\" }")
@@ -83,6 +83,18 @@ public class ReqressInTests {
                 .statusCode(200)
                 .body("name", equalTo("morpheus"))
                 .body("job", equalTo("zion resident"));
+    }
+
+    @Test
+    void unSuccessLogin() {
+        given()
+                .contentType(ContentType.JSON)
+                .body("{ \"email\": \"peter@klaven\" }")
+                .when()
+                .post("/api/login")
+                .then()
+                .statusCode(400)
+                .body("error", equalTo("Missing password"));
     }
 
 }
